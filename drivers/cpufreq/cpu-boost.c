@@ -63,7 +63,7 @@ static unsigned int input_boost_enabled = 1;
 module_param(input_boost_enabled, uint, 0644);
 static bool suspended;
 
-static unsigned int input_boost_ms = 40;
+static unsigned int input_boost_ms = 10;
 module_param(input_boost_ms, uint, 0644);
 
 static bool hotplug_boost = 1;
