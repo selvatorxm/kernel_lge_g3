@@ -170,11 +170,11 @@ static struct bds_tuners {
 	unsigned int semi_busy_threshold;
 	unsigned int semi_busy_clr_threshold;
 #endif
-#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+//#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 	unsigned int three_phase_freq;
 	unsigned int busy_threshold;
 	unsigned int busy_clr_threshold;
-#endif
+//#endif
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 	unsigned int gpu_semi_busy_threshold;
 	unsigned int gpu_semi_busy_clr_threshold;

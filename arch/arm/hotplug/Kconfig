@@ -3,7 +3,7 @@ config ASMP
 	depends on SMP
 	default y
 	help
-	  Automatically hotplugs the multiple cpu cores on and off based on cpu load and suspend state
+          AUTOSMP DUDE
 	  
 config ALUCARD_HOTPLUG
 	bool "Enable alucard-hotplug cpu hotplug driver"

@@ -37,9 +37,9 @@
 
 #define DEF_FREQUENCY_UP_THRESHOLD			(50)
 #define DEF_FREQUENCY_DOWN_THRESHOLD		(15)
-#define FREQ_STEP_DOWN 						(160000)
-#define FREQ_SLEEP_MAX 						(320000)
-#define FREQ_AWAKE_MIN 						(480000)
+#define FREQ_STEP_DOWN 						(108000)
+#define FREQ_SLEEP_MAX 						(245760)
+#define FREQ_AWAKE_MIN 						(368000)
 #define FREQ_STEP_UP_SLEEP_PERCENT 			(20)
 
 /*
@@ -107,7 +107,7 @@ static struct dbs_tuners dbs_tuners_ins = {
 	//.freq_step = 5,
 };
 
-/*static inline unsigned int get_cpu_idle_time(unsigned int cpu)
+static inline unsigned int get_cpu_idle_time(unsigned int cpu)
 {
 	unsigned int add_nice = 0, ret;
 
@@ -120,7 +120,6 @@ static struct dbs_tuners dbs_tuners_ins = {
 
 	return ret;
 }
-*/
 
 /* keep track of frequency transitions */
 static int
@@ -274,7 +273,7 @@ static ssize_t store_ignore_nice_load(struct cpufreq_policy *policy,
 	for_each_online_cpu(j) {
 		struct cpu_dbs_info_s *j_dbs_info;
 		j_dbs_info = &per_cpu(cpu_dbs_info, j);
-		j_dbs_info->prev_cpu_idle_up = get_cpu_idle_time(j, 0);
+		j_dbs_info->prev_cpu_idle_up = get_cpu_idle_time(j);
 		j_dbs_info->prev_cpu_idle_down = j_dbs_info->prev_cpu_idle_up;
 	}
 	mutex_unlock(&dbs_mutex);
@@ -287,21 +286,16 @@ static ssize_t store_ignore_nice_load(struct cpufreq_policy *policy,
 {
 	unsigned int input;
 	int ret;
-
 	ret = sscanf(buf, "%u", &input);
-
 	if (ret != 1)
 		return -EINVAL;
-
 	if (input > 100)
 		input = 100;
-
 	/ * no need to test here if freq_step is zero as the user might actually
 	 * want this, they would be crazy though :) * /
 	mutex_lock(&dbs_mutex);
 	dbs_tuners_ins.freq_step = input;
 	mutex_unlock(&dbs_mutex);
-
 	return count;
 }*/
 
@@ -367,7 +361,7 @@ static void dbs_check_cpu(int cpu)
 	idle_ticks = UINT_MAX;
 
 	/* Check for frequency increase */
-	total_idle_ticks = get_cpu_idle_time(cpu, 0);
+	total_idle_ticks = get_cpu_idle_time(cpu);
 	tmp_idle_ticks = total_idle_ticks -
 		this_dbs_info->prev_cpu_idle_up;
 	this_dbs_info->prev_cpu_idle_up = total_idle_ticks;
@@ -535,7 +529,7 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 			j_dbs_info = &per_cpu(cpu_dbs_info, j);
 			j_dbs_info->cur_policy = policy;
 
-			j_dbs_info->prev_cpu_idle_up = get_cpu_idle_time(cpu, 0);
+			j_dbs_info->prev_cpu_idle_up = get_cpu_idle_time(cpu);
 			j_dbs_info->prev_cpu_idle_down
 				= j_dbs_info->prev_cpu_idle_up;
 		}
