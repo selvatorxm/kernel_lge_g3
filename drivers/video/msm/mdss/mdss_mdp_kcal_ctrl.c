@@ -406,14 +406,14 @@ static int kcal_ctrl_probe(struct platform_device *pdev)
 
 	lut_data->enable = 0x1;
 	lut_data->red = DEF_PCC;
-	lut_data->green = DEF_PCC;
+	lut_data->green = FC;
 	lut_data->blue = DEF_PCC;
 	lut_data->minimum = 0x23;
 	lut_data->invert = 0x0;
 	lut_data->hue = 0x0;
-	lut_data->sat = DEF_PA;
-	lut_data->val = DEF_PA;
-	lut_data->cont = DEF_PA;
+	lut_data->sat = 113;
+	lut_data->val = F8;
+	lut_data->cont = 102;
 
 	mdss_mdp_kcal_update_pcc(lut_data);
 	mdss_mdp_kcal_update_pa(lut_data);
