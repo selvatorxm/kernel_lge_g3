@@ -53,13 +53,10 @@ static DEFINE_PER_CPU(struct cpufreq_cpu_save_data, cpufreq_policy_save);
 #endif
 static DEFINE_SPINLOCK(cpufreq_driver_lock);
 
-<<<<<<< HEAD
-=======
 static struct kset *cpufreq_kset;
 static struct kset *cpudev_kset;
 static DEFINE_MUTEX(cpufreq_governor_lock);
 
->>>>>>> bcc2249... cpufreq: add upstream 3.10.y driver needs
 /*
  * cpu_policy_rwsem is a per CPU reader-writer semaphore designed to cure
  * all cpufreq/hotplug/workqueue/etc related lock issues.
