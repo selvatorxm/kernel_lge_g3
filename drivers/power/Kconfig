@@ -627,7 +627,7 @@ config LGE_PM_USB_CURRENT_MAX_MODE
 
 config FORCE_FAST_CHARGE
 	bool "Force fast charging (AC/USB)"
-	default n
+	default y
 	help
 	  A simple sysfs interface to force adapters that
 	  are detected as USB to charge as AC (1A/h) or to set
