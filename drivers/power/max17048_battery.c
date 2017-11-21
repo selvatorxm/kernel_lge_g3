@@ -788,8 +788,8 @@ int max17048_set_rcomp_by_temperature(struct i2c_client *client)
 				POWER_SUPPLY_PROP_TEMP, &ret);
 
 		temp = ret.intval;
-//	} else {
-//		temp = bq24296_get_batt_temp_origin();
+	} else {
+		temp = bq24296_get_batt_temp_origin();
 	}
 #else
 	if (!chip->batt_psy) {

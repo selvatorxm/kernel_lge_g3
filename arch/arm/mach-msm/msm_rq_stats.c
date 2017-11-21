@@ -221,9 +221,12 @@ static struct kobj_attribute hotplug_disabled_attr = __ATTR_RO(hotplug_disable);
 static void def_work_fn(struct work_struct *work)
 {
 
-	diff = ktime_to_ns(ktime_get()) - rq_info.def_start_time;
+/*	diff = ktime_to_ns(ktime_get()) - rq_info.def_start_time;
 	do_div(diff, 1000 * 1000);
-	rq_info.def_interval = (unsigned int) diff;
+	rq_info.def_interval = (unsigned int) diff; */
+
+ 	if (!rq_info.hotplug_enabled)
+ 		return;
 
 	/* Notify polling threads on change of value */
 	sysfs_notify(rq_info.kobj, NULL, "def_timer_ms");
