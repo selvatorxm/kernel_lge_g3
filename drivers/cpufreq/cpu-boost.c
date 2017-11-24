@@ -362,11 +362,7 @@ static void cpuboost_input_event(struct input_handle *handle,
 		unsigned int type, unsigned int code, int value)
 {
 	u64 now;
-<<<<<<< HEAD
-	unsigned int min_interval;
-=======
 //	unsigned int min_interval;
->>>>>>> d6b2782... Replace fastcharge with charge level + fixes
 
 	if (suspended || !input_boost_enabled ||
 		work_pending(&input_boost_work))
