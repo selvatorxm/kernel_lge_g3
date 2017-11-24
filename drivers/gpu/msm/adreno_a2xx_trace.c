@@ -1,4 +1,4 @@
-/* Copyright (c) 2012, Code Aurora Forum. All rights reserved.
+/* Copyright (c) 2011, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -8,16 +8,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
  */
 
-&soc {
-	qcom,hdmi_tx@fd922100 {
-		status = "ok";
-	};
+#include "kgsl.h"
+#include "adreno.h"
 
-	i2c@f9967000 {
-		analogix_anx7816@72 {   /* SLIMPORT DISABLE */
-			status = "disable";
-		};
-	};
-};
+/* Instantiate tracepoints */
+#define CREATE_TRACE_POINTS
+#include "adreno_a2xx_trace.h"

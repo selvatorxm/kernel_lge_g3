@@ -1,4 +1,4 @@
-/* Copyright (c) 2013, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -8,19 +8,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
  */
 
-/dts-v1/;
+#include "kgsl.h"
+#include "z180.h"
+#include "z180_reg.h"
 
-/include/ "../msm8974pro.dtsi"
-/include/ "../msm8974pro-ab-pm8941.dtsi"
-/include/ "../msm8974-leds.dtsi"
-
-/include/ "../msm8974pro-lge-common/msm8974pro-lge.dtsi"
-/include/ "msm8974pro-g3-cn.dtsi"
-
-/ {
-	model = "Qualcomm MSM 8974 G3 CN";
-	compatible = "qcom,msm8974";
-	qcom,msm-id = <218 119 0x10000>;
-};
+/* Instantiate tracepoints */
+#define CREATE_TRACE_POINTS
+#include "z180_trace.h"

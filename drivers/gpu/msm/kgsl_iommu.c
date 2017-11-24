@@ -32,6 +32,7 @@
 #include "adreno_pm4types.h"
 #include "adreno.h"
 #include "kgsl_trace.h"
+#include "z180.h"
 #include "kgsl_cffdump.h"
 
 
@@ -932,6 +933,17 @@ static int kgsl_iommu_init_sync_lock(struct kgsl_mmu *mmu)
 		!kgsl_mmu_is_perprocess(mmu))
 		return status;
 
+	/*
+	 * For 2D devices cpu side sync lock is required. For 3D device,
+	 * since we only have a single 3D core and we always ensure that
+	 * 3D core is idle while writing to IOMMU register using CPU this
+	 * lock is not required
+	 */
+	if (KGSL_DEVICE_2D0 == mmu->device->id ||
+		KGSL_DEVICE_2D1 == mmu->device->id) {
+		return status;
+	}
+
 	/* Return if already initialized */
 	if (iommu->sync_lock_initialized)
 		return status;
@@ -985,7 +997,8 @@ static int kgsl_iommu_init_sync_lock(struct kgsl_mmu *mmu)
  *
  * Return - int - number of commands.
  */
-static inline unsigned int kgsl_iommu_sync_lock(struct kgsl_mmu *mmu,
+
+inline unsigned int kgsl_iommu_sync_lock(struct kgsl_mmu *mmu,
 						unsigned int *cmds)
 {
 	struct kgsl_device *device = mmu->device;
@@ -1055,7 +1068,8 @@ static inline unsigned int kgsl_iommu_sync_lock(struct kgsl_mmu *mmu,
  *
  * Return - int - number of commands.
  */
-static inline unsigned int kgsl_iommu_sync_unlock(struct kgsl_mmu *mmu,
+
+inline unsigned int kgsl_iommu_sync_unlock(struct kgsl_mmu *mmu,
 					unsigned int *cmds)
 {
 	struct kgsl_device *device = mmu->device;
