@@ -31,7 +31,7 @@ obj-$(CONFIG_CPU_FREQ_GOV_TRIPNDROID)	        += cpufreq_tripndroid.o
 obj-$(CONFIG_CPU_FREQ_GOV_WAVE)		            += cpufreq_wave.o
 obj-$(CONFIG_CPU_FREQ_GOV_WHEATLEY)	            += cpufreq_wheatley.o
 obj-$(CONFIG_CPU_FREQ_GOV_YANKACTIVE)	        += cpufreq_yankactive.o
-#obj-$(CONFIG_CPU_FREQ_GOV_BADASS)	+= cpufreq_badass.o
+obj-$(CONFIG_CPU_FREQ_GOV_BADASS)	+= cpufreq_badass.o
 obj-$(CONFIG_CPU_FREQ_GOV_SMARTASSH3)	+= cpufreq_smartassH3.o
 obj-$(CONFIG_CPU_FREQ_GOV_YANKDEMAND)	+= cpufreq_yankdemand.o
 obj-$(CONFIG_CPU_FREQ_GOV_ELEMENTALX)	+= cpufreq_elementalx.o
@@ -44,10 +44,10 @@ obj-$(CONFIG_CPU_FREQ_GOV_BLU_ACTIVE)+= cpufreq_blu_active.o
 obj-$(CONFIG_CPU_FREQ_GOV_OPTIMAX)	+= cpufreq_optimax.o
 obj-$(CONFIG_CPU_FREQ_GOV_BARRY_ALLEN)	+= cpufreq_barry_allen.o
 obj-$(CONFIG_CPU_FREQ_GOV_MYTHX_PLUG)	+= cpufreq_mythx_plug.o
-#obj-$(CONFIG_CPU_FREQ_GOV_BOOSTACTIVE)	+= cpufreq_boostactive.o
-#obj-$(CONFIG_CPU_FREQ_GOV_ABYSSPLUG)		+= cpufreq_abyssplugv2.o
-#obj-$(CONFIG_CPU_FREQ_GOV_SLP)			+= cpufreq_slp.o
-#obj-$(CONFIG_CPU_FREQ_GOV_UMBRELLA_CORE)+= cpufreq_umbrella_core.o
+obj-$(CONFIG_CPU_FREQ_GOV_BOOSTACTIVE)	+= cpufreq_boostactive.o
+obj-$(CONFIG_CPU_FREQ_GOV_ABYSSPLUG)		+= cpufreq_abyssplugv2.o
+obj-$(CONFIG_CPU_FREQ_GOV_SLP)			+= cpufreq_slp.o
+obj-$(CONFIG_CPU_FREQ_GOV_UMBRELLA_CORE)+= cpufreq_umbrella_core.o
 
 # CPUfreq cross-arch helpers
 obj-$(CONFIG_CPU_FREQ_TABLE)		+= freq_table.o

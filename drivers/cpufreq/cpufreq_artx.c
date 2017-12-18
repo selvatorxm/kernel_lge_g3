@@ -55,7 +55,6 @@ struct cpufreq_artx_cpuinfo {
 	u64 hispeed_validate_time;
 	struct rw_semaphore enable_sem;
 	int governor_enabled;
-	int prev_load;
 };
 
 static DEFINE_PER_CPU(struct cpufreq_artx_cpuinfo, cpuinfo);
@@ -67,10 +66,10 @@ static spinlock_t speedchange_cpumask_lock;
 static struct mutex gov_lock;
 
 /* Hi speed to bump to from lo speed when load burst (default max) */
-static unsigned int hispeed_freq;
+static unsigned int hispeed_freq = 1497600;
 
 /* Go to hi speed when CPU load at or above this value. */
-#define DEFAULT_GO_HISPEED_LOAD 99
+#define DEFAULT_GO_HISPEED_LOAD 50
 static unsigned long go_hispeed_load = DEFAULT_GO_HISPEED_LOAD;
 
 /* Sampling down factor to be applied to min_sample_time at max freq */
@@ -86,7 +85,7 @@ static int ntarget_loads = ARRAY_SIZE(default_target_loads);
 /*
  * The minimum amount of time to spend at a frequency before we can ramp down.
  */
-#define DEFAULT_MIN_SAMPLE_TIME (80 * USEC_PER_MSEC)
+#define DEFAULT_MIN_SAMPLE_TIME (40 * USEC_PER_MSEC)
 static unsigned long min_sample_time = DEFAULT_MIN_SAMPLE_TIME;
 
 /*
@@ -108,6 +107,7 @@ static unsigned int default_above_hispeed_delay[] = {
 static spinlock_t above_hispeed_delay_lock;
 static unsigned int *above_hispeed_delay = default_above_hispeed_delay;
 static int nabove_hispeed_delay = ARRAY_SIZE(default_above_hispeed_delay);
+
 
 /* Non-zero means indefinite speed boost active */
 static int boost_val;
@@ -133,9 +133,10 @@ static bool io_is_busy;
  * up_threshold_any_cpu_freq then do not let the frequency to drop below
  * sync_freq
  */
-static unsigned int up_threshold_any_cpu_load;
+/*static unsigned int up_threshold_any_cpu_load;
 static unsigned int sync_freq;
 static unsigned int up_threshold_any_cpu_freq;
+*/
 
 static int cpufreq_governor_artx(struct cpufreq_policy *policy,
 		unsigned int event);
@@ -364,10 +365,10 @@ static void cpufreq_artx_timer(unsigned long data)
 	unsigned long flags;
 	bool boosted;
 	unsigned long mod_min_sample_time;
-	int i, max_load;
+/*	int i, max_load;
 	unsigned int max_freq;
 	struct cpufreq_artx_cpuinfo *picpu;
-
+*/
 	if (!down_read_trylock(&pcpu->enable_sem))
 		return;
 	if (!pcpu->governor_enabled)
@@ -385,7 +386,7 @@ static void cpufreq_artx_timer(unsigned long data)
 	do_div(cputime_speedadj, delta_time);
 	loadadjfreq = (unsigned int)cputime_speedadj * 100;
 	cpu_load = loadadjfreq / pcpu->target_freq;
-	pcpu->prev_load = cpu_load;
+//	pcpu->prev_load = cpu_load;
         if (touchboost_val == 1) {
         	boosted = boost_val || now < (last_input_time + get_input_boost_duration());
                 } else {
@@ -410,7 +411,7 @@ if (touchboost_val == 1) {
 	}
 }
 
-		if (sync_freq && new_freq < sync_freq) {
+/*		if (sync_freq && new_freq < sync_freq) {
 
 			max_load = 0;
 			max_freq = 0;
@@ -429,7 +430,7 @@ if (touchboost_val == 1) {
 			if (max_freq > up_threshold_any_cpu_freq &&
 				max_load >= up_threshold_any_cpu_load)
 				new_freq = sync_freq;
-		}
+		}*/
 	}
 
 	if (pcpu->target_freq >= hispeed_freq &&
@@ -998,7 +999,7 @@ static ssize_t show_boost(struct kobject *kobj, struct attribute *attr,
 static ssize_t store_boost(struct kobject *kobj, struct attribute *attr,
 			   const char *buf, size_t count)
 {
-	int ret;
+/*	int ret;
 	unsigned long val;
 
 	ret = kstrtoul(buf, 0, &val);
@@ -1014,6 +1015,7 @@ static ssize_t store_boost(struct kobject *kobj, struct attribute *attr,
 		trace_cpufreq_artx_unboost("off");
 	}
 
+*/
 	return count;
 }
 
@@ -1104,7 +1106,7 @@ static ssize_t store_io_is_busy(struct kobject *kobj,
 static struct global_attr io_is_busy_attr = __ATTR(io_is_busy, 0644,
 		show_io_is_busy, store_io_is_busy);
 
-static ssize_t show_sync_freq(struct kobject *kobj,
+/*static ssize_t show_sync_freq(struct kobject *kobj,
 			struct attribute *attr, char *buf)
 {
 	return sprintf(buf, "%u\n", sync_freq);
@@ -1173,7 +1175,7 @@ static struct global_attr up_threshold_any_cpu_freq_attr =
 		__ATTR(up_threshold_any_cpu_freq, 0644,
 		show_up_threshold_any_cpu_freq,
 				store_up_threshold_any_cpu_freq);
-
+*/
 static struct attribute *artx_attributes[] = {
 	&target_loads_attr.attr,
 	&above_hispeed_delay_attr.attr,
@@ -1182,15 +1184,15 @@ static struct attribute *artx_attributes[] = {
 	&min_sample_time_attr.attr,
 	&timer_rate_attr.attr,
 	&timer_slack.attr,
-	&boost.attr,
+//	&boost.attr,
         &touchboost.attr,
 	&boostpulse.attr,
 	&boostpulse_duration.attr,
 	&io_is_busy_attr.attr,
 	&sampling_down_factor_attr.attr,
-	&sync_freq_attr.attr,
-	&up_threshold_any_cpu_load_attr.attr,
-	&up_threshold_any_cpu_freq_attr.attr,
+//	&sync_freq_attr.attr,
+//	&up_threshold_any_cpu_load_attr.attr,
+//	&up_threshold_any_cpu_freq_attr.attr,
 	NULL,
 };
 

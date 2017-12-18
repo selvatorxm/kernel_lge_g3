@@ -109,7 +109,7 @@ static int nabove_hispeed_delay = ARRAY_SIZE(default_above_hispeed_delay);
 #define DEFAULT_BOOSTPULSE_DURATION 80000
 static int boostpulse_duration_val = DEFAULT_BOOSTPULSE_DURATION;
 #define DEFAULT_INPUT_BOOST_FREQ 998400
-unsigned int input_boost_freq = DEFAULT_INPUT_BOOST_FREQ;
+unsigned int xinput_boost_freq = DEFAULT_INPUT_BOOST_FREQ;
 
 /*
  * Max additional time to wait in idle, beyond timer_rate, at speeds above
@@ -405,7 +405,7 @@ static void cpufreq_interactive_timer(unsigned long data)
 	loadadjfreq = (unsigned int)cputime_speedadj * 100;
 	cpu_load = loadadjfreq / pcpu->target_freq;
 	pcpu->prev_load = cpu_load;
-	boosted = now < (get_input_time() + boostpulse_duration_val);
+	boosted = now < (boostpulse_duration_val);
 
 	if (cpu_load >= go_hispeed_load) {
 		if (pcpu->target_freq < hispeed_freq) {
@@ -442,8 +442,8 @@ static void cpufreq_interactive_timer(unsigned long data)
 	}
 
 	if (boosted) {
-		if (new_freq < input_boost_freq)
-			new_freq = input_boost_freq;
+		if (new_freq < xinput_boost_freq)
+			new_freq = xinput_boost_freq;
 	}
 
 	if (pcpu->target_freq >= hispeed_freq &&
@@ -1129,7 +1129,7 @@ static struct global_attr up_threshold_any_cpu_freq_attr =
 static ssize_t show_input_boost_freq(struct kobject *kobj,
                         struct attribute *attr, char *buf)
 {
-        return sprintf(buf, "%u\n", input_boost_freq);
+        return sprintf(buf, "%u\n", xinput_boost_freq);
 }
 
 static ssize_t store_input_boost_freq(struct kobject *kobj,
@@ -1141,7 +1141,7 @@ static ssize_t store_input_boost_freq(struct kobject *kobj,
         ret = kstrtoul(buf, 0, &val);
         if (ret < 0)
                 return ret;
-        input_boost_freq = val;
+        xinput_boost_freq = val;
         return count;
 }
 

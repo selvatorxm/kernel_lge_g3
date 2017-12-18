@@ -889,7 +889,7 @@ config CPU_FREQ_GOV_MYTHX_PLUG
 	
 config CPU_FREQ_GOV_BOOSTACTIVE
 	tristate "'boostactive' cpufreq policy governor"
-	default n
+	default y
 	
 config CPU_FREQ_GOV_KTOONSERVATIVEQ
 	tristate "'ktoonservativeq' cpufreq governor"
@@ -898,16 +898,16 @@ config CPU_FREQ_GOV_KTOONSERVATIVEQ
 	
 config CPU_FREQ_GOV_ABYSSPLUG
 	tristate "'abyssplug' cpufreq governor"
-	default n
+	default y
 	depends on CPU_FREQ && NO_HZ && HOTPLUG_CPU
 	
 config CPU_FREQ_GOV_SLP
 	tristate "'slp' cpufreq policy governor"
-    default n
+    default y
 
 config CPU_FREQ_GOV_UMBRELLA_CORE
 	tristate "'umbrella_core' cpufreq policy governor"
-        default n
+        default y
 	help
 	  'umbrella_core' - This driver adds a dynamic cpufreq policy governor
 	  designed for latency-sensitive workloads.
