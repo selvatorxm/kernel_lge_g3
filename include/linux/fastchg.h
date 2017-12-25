@@ -24,13 +24,13 @@
 #define USB_LEVELS "500 600 700 800 900 1000 1100 1200 1300 1400 1500"
 #define ANY_LEVELS "100 to 2400"
 
-extern int force_fast_charge;
+extern int force_fast_charge = 2;
 
 #define FAST_CHARGE_DISABLED 0	/* default */
 #define FAST_CHARGE_FORCE_AC 1
 #define FAST_CHARGE_FORCE_CUSTOM_MA 2
 
-extern int use_mtp_during_fast_charge;
+extern int use_mtp_during_fast_charge = 1;
 
 #define USE_MTP_DURING_FAST_CHARGE_DISABLED 0
 #define USE_MTP_DURING_FAST_CHARGE_ENABLED 1	/* default */
@@ -40,7 +40,7 @@ extern int screen_on_current_limit;
 #define SCREEN_ON_CURRENT_LIMIT_DISABLED 0
 #define SCREEN_ON_CURRENT_LIMIT_ENABLED 1	/* default */
 
-extern int ac_charge_level;
+extern int ac_charge_level = 2000;
 
 #define AC_CHARGE_1000 1000
 #define AC_CHARGE_1100 1100
@@ -58,7 +58,7 @@ extern int ac_charge_level;
 #define AC_CHARGE_2300 2300
 #define AC_CHARGE_2400 2400
 
-extern int usb_charge_level;
+extern int usb_charge_level = 1000;
 
 #define USB_CHARGE_500 500	/* default */
 #define USB_CHARGE_600 600
